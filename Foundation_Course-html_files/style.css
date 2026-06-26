@@ -657,14 +657,15 @@ body {
   width: 160px;
   height: 160px;
   border-radius: 50%;
-  background-color: var(--brand-peach);
+  background: none !important; /* إزالة الشكل القديم */
+  box-shadow: none !important; /* إزالة الظل القديم */
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 24px;
   position: relative;
-  box-shadow: 0 12px 24px rgba(224, 96, 69, 0.1);
 }
+
 
 .cover-decor-inner {
   width: 120px;
@@ -674,7 +675,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden; /* مهم جداً */
 }
+
 
 .cover-title {
   font-family: "Almarai", "Cairo", sans-serif;
@@ -2739,4 +2742,29 @@ body.presenter-mode .presenter-exit-banner {
   height: 40px;
   width: auto;
   object-fit: contain;
+}
+
+
+.cover-decor-ring {
+  width: 300px !important;   /* العرض */
+  height: 160px !important;  /* الارتفاع */
+  border-radius: 30px !important; /* يحوله إلى مستطيل مستدير */
+}
+
+.cover-decor-inner {
+  width: auto;
+  height: auto;
+}
+.cover-logo {
+  width: 180px;          /* غيّري الرقم لتكبير أو تصغير */
+  height: auto;
+}
+
+.cover-decor-inner {
+  width: auto !important;        /* يسمح بالتمدد الطبيعي */
+  height: auto !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible !important;  /* يزيل القصّ الذي يمنع ظهور اللوقو كامل */
 }
