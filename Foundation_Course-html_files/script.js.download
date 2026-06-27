@@ -821,17 +821,6 @@ if (voices.length > 0) {
               <p class="intro-desc">${slide.description || ""}</p>
             </div>
             
-            <div class="exam-navbar">
-              <div class="exam-nav-dots">
-                ${slide.examQuestions.map((eq, qIdx) => {
-                  const isAns = !!examAnswers[eq.id];
-                  const actClass = qIdx === currentExamQuestionIndex ? "active" : (isAns ? "answered" : "");
-                  return `<button class="exam-nav-dot ${actClass}" data-exam-nav-idx="${qIdx}">${qIdx + 1}</button>`;
-                }).join("")}
-              </div>
-              <span class="exam-status-tag">السؤال ${currentExamQuestionIndex + 1} من 10</span>
-            </div>
-
             <div class="quiz-box">
               <div class="quiz-question-box">
                 <h3 class="quiz-q-en">${examQ.question}</h3>
@@ -858,6 +847,17 @@ if (voices.length > 0) {
                 <p class="exam-action-msg" style="color: var(--success-color);">جاهز للتسليم والتقييم!</p>
               `}
               <button class="exam-submit-btn" id="exam-final-submit" ${Object.keys(examAnswers).length < 10 ? "disabled" : ""}>إنهاء وتسليم ورقة الاختبار</button>
+            </div>
+
+            <div class="exam-navbar">
+              <div class="exam-nav-dots">
+                ${slide.examQuestions.map((eq, qIdx) => {
+                  const isAns = !!examAnswers[eq.id];
+                  const actClass = qIdx === currentExamQuestionIndex ? "active" : (isAns ? "answered" : "");
+                  return `<button class="exam-nav-dot ${actClass}" data-exam-nav-idx="${qIdx}">${qIdx + 1}</button>`;
+                }).join("")}
+              </div>
+              <span class="exam-status-tag">السؤال ${currentExamQuestionIndex + 1} من 10</span>
             </div>
           `;
         }
@@ -1495,10 +1495,18 @@ if (voices.length > 0) {
     }
     
     // Enable/Disable Steer buttons
-    if (prevBtn) prevBtn.disabled = currentSlideIndex === 0;
+    const isFinalExamSlide = slide && slide.id === "final-exam";
+    if (prevBtn) {
+      prevBtn.disabled = currentSlideIndex === 0;
+      prevBtn.innerHTML = isFinalExamSlide
+        ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="15 18 9 12 15 6"></polyline></svg> السؤال السابق`
+        : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="15 18 9 12 15 6"></polyline></svg> السابق`;
+    }
     if (nextBtn) {
       if (currentSlideIndex === window.slidesData.length - 1) {
         nextBtn.innerHTML = `إعادة تشغيل الدورة <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>`;
+      } else if (isFinalExamSlide) {
+        nextBtn.innerHTML = `السؤال التالي <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
       } else {
         nextBtn.innerHTML = `التالي <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
       }
@@ -1540,6 +1548,29 @@ if (voices.length > 0) {
   // Steer Navigation Handlers
   const goToNextSlide = () => {
     const currentSlideIndex = window.slidesData.findIndex(s => s.id === activeSlideId);
+    const currentSlide = window.slidesData[currentSlideIndex] || window.slidesData[0];
+
+    if (currentSlide && currentSlide.id === "final-exam") {
+      const totalQuestions = currentSlide.examQuestions?.length || 0;
+
+      if (currentExamQuestionIndex < totalQuestions - 1) {
+        currentExamQuestionIndex += 1;
+        renderActiveSlide();
+      } else if (Object.keys(examAnswers).length >= totalQuestions) {
+        if (currentSlideIndex < window.slidesData.length - 1) {
+          const nextSlideObj = window.slidesData[currentSlideIndex + 1];
+          saveSlideState(nextSlideObj.id, nextSlideObj.unit);
+        } else {
+          saveSlideState("cover", 1);
+        }
+      } else {
+        renderActiveSlide();
+      }
+
+      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+      return;
+    }
+
     if (currentSlideIndex < window.slidesData.length - 1) {
       const nextSlideObj = window.slidesData[currentSlideIndex + 1];
       saveSlideState(nextSlideObj.id, nextSlideObj.unit);
@@ -1552,6 +1583,19 @@ if (voices.length > 0) {
 
   const goToPrevSlide = () => {
     const currentSlideIndex = window.slidesData.findIndex(s => s.id === activeSlideId);
+    const currentSlide = window.slidesData[currentSlideIndex] || window.slidesData[0];
+
+    if (currentSlide && currentSlide.id === "final-exam") {
+      if (currentExamQuestionIndex > 0) {
+        currentExamQuestionIndex -= 1;
+        renderActiveSlide();
+      } else {
+        renderActiveSlide();
+      }
+      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+      return;
+    }
+
     if (currentSlideIndex > 0) {
       const prevSlideObj = window.slidesData[currentSlideIndex - 1];
       saveSlideState(prevSlideObj.id, prevSlideObj.unit);
