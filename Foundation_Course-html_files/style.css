@@ -2771,3 +2771,29 @@ body.presenter-mode .presenter-exit-banner {
     min-width: 100%;
 }
 
+/* ===== Scrollbar واضح للجوال فقط ===== */
+@media (max-width: 640px) {
+
+  .table-scroll {
+    overflow-x: scroll; /* دائم الظهور */
+  }
+
+  .table-scroll::-webkit-scrollbar {
+    height: 12px; /* أكبر وواضح */
+  }
+
+  .table-scroll::-webkit-scrollbar-track {
+    background: #e2e8f0; /* رمادي واضح */
+    border-radius: 10px;
+  }
+
+  .table-scroll::-webkit-scrollbar-thumb {
+    background: var(--brand-blue); /* الأزرق الخاص بك */
+    border-radius: 10px;
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.3); /* يبرز أكثر */
+  }
+
+  .table-scroll::-webkit-scrollbar-thumb:hover {
+    background: var(--brand-blue-hover);
+  }
+}
