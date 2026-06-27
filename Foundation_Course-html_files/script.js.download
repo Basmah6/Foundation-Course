@@ -91,7 +91,13 @@ document.addEventListener("DOMContentLoaded", () => {
         .replace(/\(.*?\)/g, "")
         .trim();
 
-      const utterance = new SpeechSynthesisUtterance(cleanText);
+      let textToSpeak = cleanText;
+
+if (/^[A-Z]$/.test(cleanText)) {
+    textToSpeak = cleanText.toLowerCase();
+}
+
+const utterance = new SpeechSynthesisUtterance(textToSpeak);
       utterance.lang = voiceLang;
       utterance.rate = ttsRate;
 
@@ -128,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateVisualWavesState(false);
       };
 
-console.log(utterance.voice?.name, utterance.lang, cleanText);
+
       window.speechSynthesis.speak(utterance);
     }
   };
