@@ -1789,6 +1789,55 @@ if (voices.length > 0) {
     });
   }
 
+  // نظام النطق الموحد للاختبارات
+function speak(text) {
+  // إلغاء أي صوت سابق لمنع التداخل
+  speechSynthesis.cancel();
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = "en-US";
+  utter.rate = 1;
+  utter.pitch = 1;
+
+  speechSynthesis.speak(utter);
+}
+
+// تشغيل صوت الحرف عند دخول السؤال
+function playQuestionSound(letter) {
+  speak(letter);
+}
+
+// عند اختيار الإجابة الصحيحة
+function playCorrectSound() {
+  speak("Excellent!");
+}
+
+// عند اختيار إجابة خاطئة
+function playWrongSound() {
+  speak("Not quite! Try again");
+}
+
+// مثال: ربط الأزرار (عدّلي أسماء العناصر حسب كودك)
+document.querySelectorAll(".question-sound-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const letter = btn.dataset.letter;
+    playQuestionSound(letter);
+  });
+});
+
+document.querySelectorAll(".answer-option").forEach(option => {
+  option.addEventListener("click", () => {
+    const isCorrect = option.dataset.correct === "true";
+
+    if (isCorrect) {
+      playCorrectSound();
+    } else {
+      playWrongSound();
+    }
+  });
+});
+
+
   // Mobile navigation drawer overlays
   if (sidebarToggle && sidebarNode && sidebarOverlay) {
     sidebarToggle.addEventListener("click", () => {
@@ -1810,4 +1859,6 @@ if (voices.length > 0) {
   updateFilterButtonsState();
   renderActiveSlide();
   renderSidebar();
-});
+}
+
+);
