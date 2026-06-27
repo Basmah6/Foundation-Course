@@ -1189,14 +1189,17 @@ body {
 /* TYPE 7: GRAMMAR & VOCAB TABLES */
 .table-scroll {
   overflow-x: auto;
-  overflow: hidden;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
   margin-top: 16px;
   border-radius: 16px;
   border: 1px solid var(--border-slate);
+  width: 100%;
 }
 
 .itqan-table {
-  width: 100%;
+  width: max-content;
+  min-width: 100%;
   border-collapse: collapse;
   text-align: left;
   direction: ltr;
@@ -2768,4 +2771,16 @@ body.presenter-mode .presenter-exit-banner {
 
 .search-input {
   width: 100%;
+}
+
+/* Responsive Tables */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive table {
+    width: max-content;
+    min-width: 100%;
 }
