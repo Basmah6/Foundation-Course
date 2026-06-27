@@ -80,58 +80,57 @@ document.addEventListener("DOMContentLoaded", () => {
   expandedUnits.add(currentUnitFilter);
 
   // 3. Audio Pronunciation / TTS Engine
-  const speakText = (text, voiceLang = "en-US") => {
-    if (muteSound) return;
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel(); // Terminate preceding speaking queues
-      
-      // Clear emojis and parenthesized terms for cleaner vocal synthesis
-      const cleanText = (text + " ")
-  .replace(/[\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD00-\uDFFF]/g, "")
-  .replace(/\(.*?\)/g, "")
-  .trim();
+ const speakText = (text, voiceLang = "en-US") => {
+  if (muteSound) return;
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.cancel(); // Terminate preceding speaking queues
 
+    // أهم تعديل: إضافة مسافة بعد النص لمنع نطق "Capital"
+    const cleanText = (text + " ")
+      .replace(/[\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD00-\uDFFF]/g, "")
+      .replace(/\(.*?\)/g, "")
+      .trim();
 
-      const utterance = new SpeechSynthesisUtterance(cleanText);
-      utterance.lang = voiceLang;
-      utterance.rate = ttsRate;
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.lang = voiceLang;
+    utterance.rate = ttsRate;
 
-      // Select high-fidelity voice profiles
-      const voices = window.speechSynthesis.getVoices();
-      if (voices.length > 0) {
-        let preferredVoice = null;
-        if (voiceLang === "en-US") {
-          preferredVoice = voices.find(v => 
-            v.lang.startsWith("en") && 
-            v.name.toLowerCase().includes(voiceGender === "female" ? "zira" : "david")
-          );
-          if (!preferredVoice) {
-            preferredVoice = voices.find(v => v.lang.startsWith("en"));
-          }
-        } else {
-          preferredVoice = voices.find(v => v.lang.startsWith("ar"));
+    // Select high-fidelity voice profiles
+    const voices = window.speechSynthesis.getVoices();
+    if (voices.length > 0) {
+      let preferredVoice = null;
+      if (voiceLang === "en-US") {
+        preferredVoice = voices.find(v =>
+          v.lang.startsWith("en") &&
+          v.name.toLowerCase().includes(voiceGender === "female" ? "zira" : "david")
+        );
+        if (!preferredVoice) {
+          preferredVoice = voices.find(v => v.lang.startsWith("en"));
         }
-        if (preferredVoice) {
-          utterance.voice = preferredVoice;
-        }
+      } else {
+        preferredVoice = voices.find(v => v.lang.startsWith("ar"));
       }
-
-      // Track active speaking ID to trigger CSS animations
-      speakingId = text;
-      updateVisualWavesState(true);
-
-      utterance.onend = () => {
-        speakingId = "";
-        updateVisualWavesState(false);
-      };
-      utterance.onerror = () => {
-        speakingId = "";
-        updateVisualWavesState(false);
-      };
-
-      window.speechSynthesis.speak(utterance);
+      if (preferredVoice) {
+        utterance.voice = preferredVoice;
+      }
     }
-  };
+
+    speakingId = text;
+    updateVisualWavesState(true);
+
+    utterance.onend = () => {
+      speakingId = "";
+      updateVisualWavesState(false);
+    };
+    utterance.onerror = () => {
+      speakingId = "";
+      updateVisualWavesState(false);
+    };
+
+    window.speechSynthesis.speak(utterance);
+  }
+};
+
 
   // 4. Render Active Slide Content
   const renderActiveSlide = () => {
