@@ -2762,6 +2762,8 @@ body.presenter-mode .presenter-exit-banner {
   display: flex !important;
   width: 100%;
   order: 2;
+  position: relative;
+  align-items: center;
 }
 
 .search-input {
