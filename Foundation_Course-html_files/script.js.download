@@ -98,28 +98,77 @@ if (/^[A-Z]$/.test(cleanText)) {
 }
 
 const utterance = new SpeechSynthesisUtterance(textToSpeak);
+
       utterance.lang = voiceLang;
       utterance.rate = ttsRate;
 
-      // Select high-fidelity voice profiles
-      const voices = window.speechSynthesis.getVoices();
-      if (voices.length > 0) {
-        let preferredVoice = null;
-        if (voiceLang === "en-US") {
-          preferredVoice = voices.find(v => 
-            v.lang.startsWith("en") && 
-            v.name.toLowerCase().includes(voiceGender === "female" ? "zira" : "david")
-          );
-          if (!preferredVoice) {
-            preferredVoice = voices.find(v => v.lang.startsWith("en"));
-          }
-        } else {
-          preferredVoice = voices.find(v => v.lang.startsWith("ar"));
-        }
-        if (preferredVoice) {
-          utterance.voice = preferredVoice;
-        }
-      }
+      // Select the best available voice for each platform
+const voices = window.speechSynthesis.getVoices();
+
+if (voices.length > 0) {
+
+  const femaleVoices = [
+    "zira",
+    "samantha",
+    "ava",
+    "allison",
+    "karen",
+    "moira",
+    "victoria",
+    "susan",
+    "serena",
+    "google us english"
+  ];
+
+  const maleVoices = [
+    "david",
+    "daniel",
+    "aaron",
+    "alex",
+    "fred",
+    "tom",
+    "oliver",
+    "google uk english male",
+    "google us english male"
+  ];
+
+  let preferredVoice = null;
+
+  if (voiceLang.startsWith("en")) {
+
+    const candidates = voices.filter(v =>
+      v.lang.toLowerCase().startsWith("en")
+    );
+
+    const preferredNames =
+      voiceGender === "female"
+        ? femaleVoices
+        : maleVoices;
+
+    preferredVoice = candidates.find(v =>
+      preferredNames.some(name =>
+        v.name.toLowerCase().includes(name)
+      )
+    );
+
+    // Fallback to any English voice
+    if (!preferredVoice && candidates.length > 0) {
+      preferredVoice = candidates[0];
+    }
+
+  } else if (voiceLang.startsWith("ar")) {
+
+    preferredVoice = voices.find(v =>
+      v.lang.toLowerCase().startsWith("ar")
+    );
+
+  }
+
+  if (preferredVoice) {
+    utterance.voice = preferredVoice;
+    console.log("Using voice:", preferredVoice.name);
+  }
+}
 
       // Track active speaking ID to trigger CSS animations
       speakingId = text;
