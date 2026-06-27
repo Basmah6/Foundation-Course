@@ -124,6 +124,8 @@ if (/^[A-Z]$/.test(cleanText)) {
     textToSpeak = cleanText.toLowerCase();
 }
 
+textToSpeak = normalizeSpeech(textToSpeak);
+
 const utterance = new SpeechSynthesisUtterance(textToSpeak);
 
       utterance.lang = voiceLang;
@@ -1755,6 +1757,182 @@ if (voices.length > 0) {
       sidebarOverlay.classList.remove("active");
     });
   }
+
+
+
+function normalizeSpeech(text) {
+
+  if (!text) return "";
+
+  text = text.trim();
+
+  // إزالة الفراغات المتكررة
+  text = text.replace(/\s+/g, " ");
+
+  // ===========================
+  // Single English Letters
+  // ===========================
+
+  const letters = {
+    A:"Letter A",
+    B:"Letter B",
+    C:"Letter C",
+    D:"Letter D",
+    E:"Letter E",
+    F:"Letter F",
+    G:"Letter G",
+    H:"Letter H",
+    I:"Letter I",
+    J:"Letter J",
+    K:"Letter K",
+    L:"Letter L",
+    M:"Letter M",
+    N:"Letter N",
+    O:"Letter O",
+    P:"Letter P",
+    Q:"Letter Q",
+    R:"Letter R",
+    S:"Letter S",
+    T:"Letter T",
+    U:"Letter U",
+    V:"Letter V",
+    W:"Letter W",
+    X:"Letter X",
+    Y:"Letter Y",
+    Z:"Letter Z"
+  };
+
+  if (letters[text.toUpperCase()]) {
+    return letters[text.toUpperCase()];
+  }
+
+  // ===========================
+  // Numbers
+  // ===========================
+
+  const numbers = {
+    "0":"zero",
+    "1":"one",
+    "2":"two",
+    "3":"three",
+    "4":"four",
+    "5":"five",
+    "6":"six",
+    "7":"seven",
+    "8":"eight",
+    "9":"nine",
+    "10":"ten"
+  };
+
+  if(numbers[text]){
+    return numbers[text];
+  }
+
+  // ===========================
+  // Common problematic words
+  // ===========================
+
+  const words = {
+
+    Arm:"arm.",
+    Arms:"arms.",
+    Apple:"apple.",
+    Ant:"ant.",
+    All:"all.",
+
+    Ball:"ball.",
+    Bag:"bag.",
+    Book:"book.",
+    Boy:"boy.",
+
+    Cat:"cat.",
+    Car:"car.",
+    Cup:"cup.",
+
+    Dog:"dog.",
+    Door:"door.",
+
+    Egg:"egg.",
+    Elephant:"elephant.",
+    Ear:"ear.",
+
+    Fish:"fish.",
+    Flower:"flower.",
+
+    Goat:"goat.",
+    Girl:"girl.",
+
+    Hat:"hat.",
+    House:"house.",
+    Hour:"hour.",
+    Honest:"honest.",
+    Honor:"honor.",
+    Heir:"heir.",
+
+    Ink:"ink.",
+    Ice:"ice.",
+
+    Jacket:"jacket.",
+
+    Key:"key.",
+    Kite:"kite.",
+
+    Lion:"lion.",
+
+    Monkey:"monkey.",
+
+    Nose:"nose.",
+
+    Owl:"owl.",
+    Orange:"orange.",
+
+    Pen:"pen.",
+
+    Queen:"queen.",
+
+    Rabbit:"rabbit.",
+
+    Sun:"sun.",
+
+    Tiger:"tiger.",
+
+    Umbrella:"umbrella.",
+
+    Van:"van.",
+
+    Window:"window.",
+
+    Xylophone:"xylophone.",
+
+    Yellow:"yellow.",
+
+    Zebra:"zebra."
+  };
+
+  if(words[text]){
+    return words[text];
+  }
+
+  // ===========================
+  // كلمة إنجليزية واحدة فقط
+  // ===========================
+
+  if(/^[A-Za-z]+$/.test(text)){
+      return text + ".";
+  }
+
+  // ===========================
+  // جملة إنجليزية
+  // ===========================
+
+  if(/^[A-Za-z ,.'!?-]+$/.test(text)){
+      return text.replace(/[.!?]?$/, ".");
+  }
+
+  return text;
+}
+
+
 
   // Steer Navigation buttons listeners
   if (prevBtn) prevBtn.addEventListener("click", goToPrevSlide);
