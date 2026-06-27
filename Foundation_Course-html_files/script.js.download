@@ -120,11 +120,13 @@ if ("speechSynthesis" in window) {
 
       let textToSpeak = cleanText;
 
-if (/^[A-Z]$/.test(cleanText)) {
-    textToSpeak = cleanText.toLowerCase();
-}
+      if (cleanText.toLowerCase() === "sh") {
+        textToSpeak = "shee";
+      } else if (/^[A-Z]$/.test(cleanText)) {
+        textToSpeak = cleanText.toLowerCase();
+      }
 
-const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
 
       utterance.lang = voiceLang;
       utterance.rate = ttsRate;
@@ -412,13 +414,13 @@ if (voices.length > 0) {
         }
 
         const singularMap = {
-          "Nouns": "Noun",
-          "Verbs": "Verb",
-          "Prepositions": "Preposition",
-          "Adjectives": "Adjective",
-          "Adverbs": "Adverb",
-          "Conjunctions": "Conjunction",
-          "Pronouns": "Pronoun"
+          "Nouns": "Nouns",
+          "Verbs": "Verbs",
+          "Prepositions": "Prepositions",
+          "Adjectives": "Adjectives",
+          "Adverbs": "Adverbs",
+          "Conjunctions": "Conjunctions",
+          "Pronouns": "Pronouns"
         };
         const displayWord = singularMap[cleanSpeakWord] || cleanSpeakWord;
 
