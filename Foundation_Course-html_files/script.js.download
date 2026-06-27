@@ -79,6 +79,33 @@ document.addEventListener("DOMContentLoaded", () => {
   currentUnitFilter = initialSlide.unit;
   expandedUnits.add(currentUnitFilter);
 
+// ===========================
+// Load available voices once
+// ===========================
+
+let availableVoices = [];
+
+function loadVoices() {
+  availableVoices = window.speechSynthesis.getVoices();
+
+  console.table(
+    availableVoices.map(v => ({
+      name: v.name,
+      lang: v.lang,
+      default: v.default,
+      local: v.localService
+    }))
+  );
+}
+
+if ("speechSynthesis" in window) {
+  loadVoices();
+
+  window.speechSynthesis.onvoiceschanged = () => {
+    loadVoices();
+  };
+}
+
   // 3. Audio Pronunciation / TTS Engine
   const speakText = (text, voiceLang = "en-US") => {
     if (muteSound) return;
@@ -102,72 +129,122 @@ const utterance = new SpeechSynthesisUtterance(textToSpeak);
       utterance.lang = voiceLang;
       utterance.rate = ttsRate;
 
-      // Select the best available voice for each platform
-const voices = window.speechSynthesis.getVoices();
+      // ===========================
+// Smart cross-platform voice selection
+// ===========================
+
+const voices = availableVoices;
 
 if (voices.length > 0) {
 
-  const femaleVoices = [
-    "zira",
-    "samantha",
-    "ava",
-    "allison",
-    "karen",
-    "moira",
-    "victoria",
-    "susan",
-    "serena",
-    "google us english"
-  ];
+  const voicePriority = {
 
-  const maleVoices = [
-    "david",
-    "daniel",
-    "aaron",
-    "alex",
-    "fred",
-    "tom",
-    "oliver",
-    "google uk english male",
-    "google us english male"
-  ];
+    female: [
+      // Windows
+      "zira",
+      "jenny",
+      "aria",
+      "michelle",
+      "hazel",
+      "susan",
+
+      // Apple
+      "samantha",
+      "ava",
+      "allison",
+      "karen",
+      "moira",
+      "victoria",
+      "fiona",
+      "tessa",
+      "veena",
+      "martha",
+
+      // Google
+      "google uk english female",
+      "google us english"
+    ],
+
+    male: [
+      // Windows
+      "david",
+      "mark",
+      "guy",
+      "christopher",
+      "george",
+
+      // Apple
+      "alex",
+      "daniel",
+      "aaron",
+      "arthur",
+      "fred",
+      "bruce",
+      "ralph",
+      "junior",
+      "rishi",
+
+      // Google
+      "google uk english male",
+      "google us english male"
+    ]
+
+  };
 
   let preferredVoice = null;
 
+  const langPrefix = voiceLang.startsWith("ar") ? "ar" : "en";
+
+  const candidates = voices.filter(v =>
+    v.lang.toLowerCase().startsWith(langPrefix)
+  );
+
   if (voiceLang.startsWith("en")) {
 
-    const candidates = voices.filter(v =>
-      v.lang.toLowerCase().startsWith("en")
-    );
-
     const preferredNames =
-      voiceGender === "female"
-        ? femaleVoices
-        : maleVoices;
+      voicePriority[voiceGender] || voicePriority.female;
 
-    preferredVoice = candidates.find(v =>
-      preferredNames.some(name =>
-        v.name.toLowerCase().includes(name)
-      )
-    );
-
-    // Fallback to any English voice
-    if (!preferredVoice && candidates.length > 0) {
-      preferredVoice = candidates[0];
+    outerLoop:
+    for (const keyword of preferredNames) {
+      for (const voice of candidates) {
+        if (voice.name.toLowerCase().includes(keyword)) {
+          preferredVoice = voice;
+          break outerLoop;
+        }
+      }
     }
 
-  } else if (voiceLang.startsWith("ar")) {
+    // Fallback لأي صوت إنجليزي
+    if (!preferredVoice) {
+      preferredVoice =
+        candidates.find(v => v.default) ||
+        candidates[0];
+    }
 
-    preferredVoice = voices.find(v =>
-      v.lang.toLowerCase().startsWith("ar")
-    );
+  } else {
 
+    preferredVoice =
+      candidates.find(v => v.default) ||
+      candidates[0];
+
+  }
+
+  // آخر حل احتياطي
+  if (!preferredVoice) {
+    preferredVoice = voices.find(v => v.default) || voices[0];
   }
 
   if (preferredVoice) {
     utterance.voice = preferredVoice;
-    console.log("Using voice:", preferredVoice.name);
+
+    console.log(
+      "Selected voice:",
+      preferredVoice.name,
+      "|",
+      preferredVoice.lang
+    );
   }
+
 }
 
       // Track active speaking ID to trigger CSS animations
