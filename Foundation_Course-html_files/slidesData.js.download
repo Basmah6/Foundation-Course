@@ -944,18 +944,16 @@ const slidesData = [
   // PRONOUNS SPECIFIC
   {
     id: "u3-pronouns",
-    type: "grammar-table",
+    type: "letter-detail",
     unit: 3,
     title: "3. الضمائر (Pronouns)",
     description: "تأخذ مكان الاسم وتمنع التكرار الركيك. مثال: بدلاً من قول 'Ahmad is teacher. Ahmad is smart' نقول: 'Ahmad is a teacher, he is smart.'",
-    grammarRows: [
-      { subject: "I", verb: "أنا", object: "تستخدم للمتكلم المفرد" },
-      { subject: "He", verb: "هو", object: "تستخدم للغائب المفرد المذكر" },
-      { subject: "she", verb: "هي", object: "تستخدم للغائب المفرد المؤنث" },
-      { subject: "it", verb: "هو / هي لغير العاقل", object: "للجماد والحيوانات والأشياء" },
-      { subject: "you", verb: "أنتَ / أنتِ / أنتم", object: "للمخاطب المفرد والجمع" },
-      { subject: "they", verb: "هم", object: "للغائبين الجمع" },
-      { subject: "we", verb: "نحن", object: "للمتكلمين الجمع" }
+    letter: "Pronouns",
+    examples: [
+      { word: "I", arabic: "أنا", emoji: "🧑" },
+      { word: "He", arabic: "هو", emoji: "🧔" },
+      { word: "She", arabic: "هي", emoji: "👩" },
+      { word: "They", arabic: "هم", emoji: "👥" }
     ]
   },
 
@@ -983,100 +981,47 @@ const slidesData = [
   // ADJECTIVES
   {
     id: "u3-adjectives",
-    type: "sounds-compound",
+    type: "letter-detail",
     unit: 3,
     title: "5. الصفات (Adjectives)",
     description: "الصفة (Adjective) تصف الاسم دائماً وتوضحه (مثل الشكل، اللون، الحجم، أو المشاعر). وتأتي عامةً قبل الاسم أو بعد فعل الكينونة.",
-    sounds: [
-      {
-        sound: "Adjectives (الصفات)",
-        arabicPron: "تصف الاسم (شكل، لون، حجم، مشاعر، إلخ)",
-        examples: [
-          { english: "Tall", arabic: "طويل" },
-          { english: "Red", arabic: "أحمر" },
-          { english: "Beautiful", arabic: "جميل" },
-          { english: "Happy", arabic: "سعيد" },
-          { english: "Small", arabic: "صغير" },
-          { english: "Fast", arabic: "سريع" },
-          { english: "Cold", arabic: "بارد" },
-          { english: "Hot", arabic: "حار" },
-          { english: "He is tall", arabic: "مثال: هو طويل (صفة بعد فعل الكينونة)" },
-          { english: "A big car", arabic: "مثال: سيارة كبيرة (الصفة تسبق الاسم الموصوف)" },
-          { english: "He is slow", arabic: "قاعدة: slow صفة توصف أنه شخص بطيء" }
-        ]
-      }
+    letter: "Adjectives",
+    examples: [
+      { word: "Tall", arabic: "طويل", emoji: "🧍" },
+      { word: "Red", arabic: "أحمر", emoji: "🔴" },
+      { word: "Beautiful", arabic: "جميل", emoji: "✨" },
+      { word: "Happy", arabic: "سعيد", emoji: "😊" }
     ]
   },
 
   // ADVERBS
   {
     id: "u3-adverbs",
-    type: "sounds-compound",
+    type: "letter-detail",
     unit: 3,
     title: "6. الأحوال / الظروف (Adverbs)",
     description: "الحال (Adverb) يصف الفعل بكيفية ودرجة حدوثه، أو يصف طريقة حدوث الحدث. وغالباً ما ينتهي باللاحقة (-ly).",
-    sounds: [
-      {
-        sound: "Adverbs (الأحوال)",
-        arabicPron: "تصف الفعل بكيفية ودرجة حدوثه (غالباً تنتهي بـ ly)",
-        examples: [
-          { english: "Slowly", arabic: "ببطء" },
-          { english: "Quickly", arabic: "بسرعة" },
-          { english: "Happily", arabic: "بسعادة / بفرح" },
-          { english: "Loudly", arabic: "بصوت عالٍ" },
-          { english: "Carefully", arabic: "بعناية / بحذر" },
-          { english: "Easily", arabic: "بسهولة" },
-          { english: "He runs slowly", arabic: "مثال: هو يركض ببطء (slowly يصف طريقة الركض)" },
-          { english: "She sings beautifully", arabic: "مثال: هي تغني بجمال (beautifully يصف طريقة الغناء)" },
-          { english: "He speaks quietly", arabic: "مثال: هو يتحدث بهدوء (quietly يصف طريقة التحدث)" }
-        ]
-      }
+    letter: "Adverbs",
+    examples: [
+      { word: "Slowly", arabic: "ببطء", emoji: "🐢" },
+      { word: "Quickly", arabic: "بسرعة", emoji: "⚡" },
+      { word: "Happily", arabic: "بسعادة", emoji: "😊" },
+      { word: "Carefully", arabic: "بعناية", emoji: "🧠" }
     ]
   },
 
   // CONJUNCTION SPECIFIC
   {
     id: "u3-conjunction",
-    type: "sounds-compound",
+    type: "letter-detail",
     unit: 3,
-    title: "7. أدوات العطف (Conjunction)",
+    title: "7. أدوات العطف (Conjunctions)",
     description: "كلمات تربط بين الكلمات أو الجمل أو الأفكار في نفس السياق لمنع التكرار وصياغة جمل بليغة.",
-    sounds: [
-      {
-        sound: "and",
-        arabicPron: "الواو (و)",
-        examples: [
-          { english: "I like coffee and tea", arabic: "بدل تكرار الجملتين نقول: أحب القهوة والشاي." }
-        ]
-      },
-      {
-        sound: "or",
-        arabicPron: "أو (للتخيير)",
-        examples: [
-          { english: "Do you want water or tea?", arabic: "هل تريد ماءً أو شاياً؟" }
-        ]
-      },
-      {
-        sound: "But",
-        arabicPron: "لكن (للاستدراك والتعارض)",
-        examples: [
-          { english: "I am tired, but I am happy", arabic: "أنا متعب ولكنني سعيد" }
-        ]
-      },
-      {
-        sound: "Because",
-        arabicPron: "بسبب / لأن (لإعطاء سبب)",
-        examples: [
-          { english: "I eat because I am hungry", arabic: "أنا آكل لأنني جائع" }
-        ]
-      },
-      {
-        sound: "Although",
-        arabicPron: "بالرغم من",
-        examples: [
-          { english: "Although it was raining, we played", arabic: "بالرغم من هطول المطر لعبنا" }
-        ]
-      }
+    letter: "Conjunctions",
+    examples: [
+      { word: "and", arabic: "و", emoji: "🔗" },
+      { word: "or", arabic: "أو", emoji: "🔀" },
+      { word: "but", arabic: "لكن", emoji: "⚖️" }
     ]
   },
 
