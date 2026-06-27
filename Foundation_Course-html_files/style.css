@@ -2768,3 +2768,20 @@ body.presenter-mode .presenter-exit-banner {
   align-items: center;
   overflow: visible !important;  /* يزيل القصّ الذي يمنع ظهور اللوقو كامل */
 }
+
+
+@media (max-width: 480px) {
+  .search-container,
+  .voice-deck {
+    display: flex !important;
+  }
+
+  .search-container {
+    width: 100% !important;
+  }
+
+  .voice-deck {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
