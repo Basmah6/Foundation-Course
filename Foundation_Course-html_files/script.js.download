@@ -141,198 +141,52 @@ if (voices.length > 0) {
 
     female: [
       // Windows
-     "zira",
+      "zira",
+      "jenny",
+      "aria",
+      "michelle",
+      "hazel",
+      "susan",
 
-    "jenny",
+      // Apple
+      "samantha",
+      "ava",
+      "allison",
+      "karen",
+      "moira",
+      "victoria",
+      "fiona",
+      "tessa",
+      "veena",
+      "martha",
 
-    "aria",
-
-    "michelle",
-
-    "hazel",
-
-    "susan",
-
-    "libby",
-
-    "sonia",
-
-    "natasha",
-
-    "clara",
-
-    "emma",
-
-    // Apple (iPhone / iPad / Mac)
-
-    "samantha",
-
-    "ava",
-
-    "allison",
-
-    "karen",
-
-    "moira",
-
-    "victoria",
-
-    "fiona",
-
-    "tessa",
-
-    "veena",
-
-    "martha",
-
-    "serena",
-
-    "nicky",
-
-    "zoe",
-
-    // Google
-
-    "google uk english female",
-
-    "google us english",
-
-    "google english",
-
-    "english united kingdom",
-
-    "english united states",
-
-    // Samsung
-
-    "samsung female",
-
-    "samsung english female",
-
-    // Nuance
-
-    "kate",
-
-    "karen premium",
-
-    "amy",
-
-    // CereProc
-
-    "heather",
-
-    "isobel",
-
-    // Amazon Polly
-
-    "joanna",
-
-    "ivy",
-
-    "kendra",
-
-    "kimberly",
-
-    "salli",
-
-    // Generic
-
-    "female",
-
-    "woman",
-
-    "english female"
+      // Google
+      "google uk english female",
+      "google us english"
     ],
 
     male: [
       // Windows
-    "david",
+      "david",
+      "mark",
+      "guy",
+      "christopher",
+      "george",
 
-    "mark",
+      // Apple
+      "alex",
+      "daniel",
+      "aaron",
+      "arthur",
+      "fred",
+      "bruce",
+      "ralph",
+      "junior",
+      "rishi",
 
-    "guy",
-
-    "christopher",
-
-    "george",
-
-    "ryan",
-
-    "roger",
-
-    "andrew",
-
-    "brian",
-
-    "eric",
-
-    // Apple
-
-    "alex",
-
-    "daniel",
-
-    "aaron",
-
-    "arthur",
-
-    "fred",
-
-    "bruce",
-
-    "ralph",
-
-    "junior",
-
-    "rishi",
-
-    "tom",
-
-    "oliver",
-
-    "lee",
-
-    // Google
-
-    "google uk english male",
-
-    "google us english male",
-
-    "google english male",
-
-    // Samsung
-
-    "samsung male",
-
-    "samsung english male",
-
-    // Nuance
-
-    "tom",
-
-    "paul",
-
-    // CereProc
-
-    "stuart",
-
-    // Amazon Polly
-
-    "matthew",
-
-    "joey",
-
-    "justin",
-
-    "brian",
-
-    // Generic
-
-    "male",
-
-    "man",
-
-    "english male"
+      // Google
+      "google uk english male",
+      "google us english male"
     ]
 
   };
