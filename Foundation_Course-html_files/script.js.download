@@ -80,57 +80,57 @@ document.addEventListener("DOMContentLoaded", () => {
   expandedUnits.add(currentUnitFilter);
 
   // 3. Audio Pronunciation / TTS Engine
- const speakText = (text, voiceLang = "en-US") => {
-  if (muteSound) return;
-  if ("speechSynthesis" in window) {
-    window.speechSynthesis.cancel(); // Terminate preceding speaking queues
+  const speakText = (text, voiceLang = "en-US") => {
+    if (muteSound) return;
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel(); // Terminate preceding speaking queues
+      
+      // Clear emojis and parenthesized terms for cleaner vocal synthesis
+      const cleanText = text
+        .replace(/[\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD00-\uDFFF]/g, "")
+        .replace(/\(.*?\)/g, "")
+        .trim();
 
-    // أهم تعديل: إضافة مسافة بعد النص لمنع نطق "Capital"
-    const cleanText = (text + " ")
-      .replace(/[\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD00-\uDFFF]/g, "")
-      .replace(/\(.*?\)/g, "")
-      .trim();
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      utterance.lang = voiceLang;
+      utterance.rate = ttsRate;
 
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = voiceLang;
-    utterance.rate = ttsRate;
-
-    // Select high-fidelity voice profiles
-    const voices = window.speechSynthesis.getVoices();
-    if (voices.length > 0) {
-      let preferredVoice = null;
-      if (voiceLang === "en-US") {
-        preferredVoice = voices.find(v =>
-          v.lang.startsWith("en") &&
-          v.name.toLowerCase().includes(voiceGender === "female" ? "zira" : "david")
-        );
-        if (!preferredVoice) {
-          preferredVoice = voices.find(v => v.lang.startsWith("en"));
+      // Select high-fidelity voice profiles
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length > 0) {
+        let preferredVoice = null;
+        if (voiceLang === "en-US") {
+          preferredVoice = voices.find(v => 
+            v.lang.startsWith("en") && 
+            v.name.toLowerCase().includes(voiceGender === "female" ? "zira" : "david")
+          );
+          if (!preferredVoice) {
+            preferredVoice = voices.find(v => v.lang.startsWith("en"));
+          }
+        } else {
+          preferredVoice = voices.find(v => v.lang.startsWith("ar"));
         }
-      } else {
-        preferredVoice = voices.find(v => v.lang.startsWith("ar"));
+        if (preferredVoice) {
+          utterance.voice = preferredVoice;
+        }
       }
-      if (preferredVoice) {
-        utterance.voice = preferredVoice;
-      }
+
+      // Track active speaking ID to trigger CSS animations
+      speakingId = text;
+      updateVisualWavesState(true);
+
+      utterance.onend = () => {
+        speakingId = "";
+        updateVisualWavesState(false);
+      };
+      utterance.onerror = () => {
+        speakingId = "";
+        updateVisualWavesState(false);
+      };
+
+      window.speechSynthesis.speak(utterance);
     }
-
-    speakingId = text;
-    updateVisualWavesState(true);
-
-    utterance.onend = () => {
-      speakingId = "";
-      updateVisualWavesState(false);
-    };
-    utterance.onerror = () => {
-      speakingId = "";
-      updateVisualWavesState(false);
-    };
-
-    window.speechSynthesis.speak(utterance);
-  }
-};
-
+  };
 
   // 4. Render Active Slide Content
   const renderActiveSlide = () => {
@@ -179,30 +179,6 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
 
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             
             <div class="cover-subtitle">${slide.subtitle || ""}</div>
             <p class="cover-desc">${slide.description || ""}</p>
@@ -353,25 +329,6 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
         break;
       }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       case "sounds-intro":
         htmlContent = `
@@ -579,27 +536,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         break;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       case "conversation":
         htmlContent = `
           <div class="intro-slide-header">
@@ -782,30 +718,6 @@ document.addEventListener("DOMContentLoaded", () => {
               </div>
             </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <div class="exam-action-block">
               ${Object.keys(examAnswers).length < 10 ? `
                 <p class="exam-action-msg">يجب إجابة كافة الأسئلة الـ 10 لتتمكن من تسليم ورقة الاختبار</p>
@@ -971,10 +883,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (cell.dataset.char) {
           const char = cell.dataset.char;
-          speakText(char + " ", "en-US");
+          speakText(char, "en-US");
         } else if (cell.dataset.numberText) {
           const textVal = cell.dataset.numberText;
-          speakText(char + " ", "en-US");
+          speakText(textVal, "en-US");
         }
       });
     });
@@ -1024,23 +936,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // Full row sentence speaker click in tables
     document.querySelectorAll(".row-play-btn").forEach(btn => {
@@ -1233,26 +1128,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // Completion print certificate trigger
     const certPrintBtn = document.getElementById("cert-print-btn");
     if (certPrintBtn) {
@@ -1442,21 +1317,6 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
           ${isBookmarked ? `<span style="color: var(--brand-yellow); margin-right: 8px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></span>` : ""}
         `;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         itemNode.addEventListener("click", (e) => {
           e.stopPropagation();
