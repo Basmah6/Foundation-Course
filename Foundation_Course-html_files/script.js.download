@@ -975,7 +975,7 @@ document.addEventListener("DOMContentLoaded", () => {
           speakText(char + " ", "en-US");
         } else if (cell.dataset.numberText) {
           const textVal = cell.dataset.numberText;
-          speakText(textVal, "en-US");
+          speakText(char + " ", "en-US");
         }
       });
     });
