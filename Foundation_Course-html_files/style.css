@@ -2812,31 +2812,59 @@ body.presenter-mode .presenter-exit-banner {
 
 @media print {
 
-  /* إخفاء كل شيء */
+  @page {
+    size: A4 landscape; /* أو احذف landscape إذا شهادتك بالطول */
+    margin: 0;
+  }
+
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: white;
+  }
+
   body * {
     visibility: hidden !important;
   }
 
-  /* إظهار الشهادة فقط */
   #certificate-print-area,
   #certificate-print-area * {
     visibility: visible !important;
   }
 
-  /* جعل الشهادة تملأ الصفحة */
-  #certificate-print-area {
-    position: absolute;
-    top: 0;
-    left: 0;
+#certificate-print-area {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+}
+
+#certificate-print-area.certificate-frame {
+    width: 95%;
+    height: 90%;
+    max-width: none;
+    max-height: none;
+    box-sizing: border-box;
+    margin: auto;
+    padding: 32px;
+}
+
+  /* الشهادة نفسها */
+  #certificate-print-area .certificate {
     width: 100%;
-    margin: 0;
-    padding: 0;
+    max-width: none;
+    height: auto;
   }
 
-  /* إخفاء زر الطباعة نفسه */
   #cert-print-btn {
     display: none !important;
   }
 
 }
+
 
