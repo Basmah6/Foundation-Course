@@ -691,31 +691,6 @@ if (voices.length > 0) {
         }
         break;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       case "conversation":
         htmlContent = `
           <div class="intro-slide-header">
@@ -958,31 +933,6 @@ if (voices.length > 0) {
               </div>
             </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <!-- Certified input and template blocks -->
             <div class="certificate-generator-block" style="width: 100%;">
               <h3 style="font-size: 0.9rem; font-weight: 850; text-align: right; color: #fff; margin-bottom: 6px;">طلب إصدار شهادة إتمام الدورة التأسيسية الرسمية:</h3>
@@ -1056,6 +1006,7 @@ if (voices.length > 0) {
     
     // Bind click events on generated dynamic items
     bindDynamicEvents();
+    initTableHint();
     
     // Track indicators and stepper states
     updateGlobalProgress();
@@ -1582,7 +1533,39 @@ if (slide && slide.type === "quiz" && slide.quizData && slide.quizData.audioText
 
 
 
+const initTableHint = () => {
 
+    if (window.innerWidth > 640) return;
+
+    const observer = new IntersectionObserver(entries => {
+
+        entries.forEach(entry => {
+
+            if (!entry.isIntersecting) return;
+
+            const table = entry.target;
+
+            if (table.dataset.hinted) return;
+
+            table.dataset.hinted = "1";
+
+            table.classList.add("table-hint");
+
+            setTimeout(() => {
+                table.classList.remove("table-hint");
+            },1100);
+
+        });
+
+    },{
+        threshold:0.5
+    });
+
+    document.querySelectorAll(".table-scroll").forEach(table=>{
+        observer.observe(table);
+    });
+
+};
 
 
 
