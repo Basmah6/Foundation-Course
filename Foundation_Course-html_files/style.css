@@ -2824,18 +2824,32 @@ body.presenter-mode .presenter-exit-banner {
   }
 
   /* جعل الشهادة تملأ الصفحة */
-  #certificate-print-area {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
+ #certificate-print-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  max-width: none;
+
+  margin: 0 auto;
+
+  transform-origin: top center;
+}
 
   /* إخفاء زر الطباعة نفسه */
   #cert-print-btn {
     display: none !important;
   }
+
+  @media print and (max-width: 768px) {
+
+  #certificate-print-area {
+
+    zoom: 1.45;
+
+  }
+
+}
 
 }
