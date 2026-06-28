@@ -407,6 +407,26 @@ if (voices.length > 0) {
           }
         }
         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // Clean up "A, a" to just "A" for single pronunciation
         let cleanSpeakWord = rawSpeakWord;
         if (cleanSpeakWord.includes(",")) {
@@ -671,6 +691,31 @@ if (voices.length > 0) {
         }
         break;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       case "conversation":
         htmlContent = `
           <div class="intro-slide-header">
@@ -913,6 +958,31 @@ if (voices.length > 0) {
               </div>
             </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <!-- Certified input and template blocks -->
             <div class="certificate-generator-block" style="width: 100%;">
               <h3 style="font-size: 0.9rem; font-weight: 850; text-align: right; color: #fff; margin-bottom: 6px;">طلب إصدار شهادة إتمام الدورة التأسيسية الرسمية:</h3>
@@ -1109,91 +1179,84 @@ if (voices.length > 0) {
     }
 
     // Quiz options click triggers
-    document.querySelectorAll(".quiz-option-card[data-option]").forEach(card => {
-      card.addEventListener("click", () => {
-        // Prevent clicking multiple times if already graded
-        if (quizResults[slide.id]) return;
-        const optionChosen = card.dataset.option;
-        
-        // Save answers state
-        quizAnswers[slide.id] = optionChosen;
-        const isCorrect = optionChosen === slide.quizData.correctAnswer;
-        quizResults[slide.id] = isCorrect ? "correct" : "incorrect";
+  // ====== استبدل قسم الـ Quiz والـ Auto-speak داخل bindDynamicEvents بهذا الكود الآمن ======
 
-        localStorage.setItem("quiz_answers_saved", "true");
-        localStorage.setItem("itqan_quiz_answers", JSON.stringify(quizAnswers));
-        localStorage.setItem("itqan_quiz_results", JSON.stringify(quizResults));
+// Quiz options click triggers
+document.querySelectorAll(".quiz-option-card[data-option]").forEach(card => {
+  card.addEventListener("click", () => {
+    // Prevent clicking multiple times if already graded
+    if (quizResults[slide.id]) return;
+    
+    // إلغاء مؤقت النطق التلقائي الخاص بالسؤال فوراً لمنع التداخل
+    if (window.quizAudioTimers && window.quizAudioTimers[slide.id]) {
+      clearTimeout(window.quizAudioTimers[slide.id]);
+    }
+    
+    // إيقاف أي نطق جاري حالياً قبل بدء نطق التقييم
+    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
 
-        // Special logic for Unit 1 – Questions 1 to 5
-const isUnit1Question =
-  slide.unit === 1 &&
-  ["u1-q1", "u1-q2", "u1-q3", "u1-q4", "u1-q5"].includes(slide.id);
+    const optionChosen = card.dataset.option;
+    
+    // Save answers state
+    quizAnswers[slide.id] = optionChosen;
+    const isCorrect = optionChosen === slide.quizData.correctAnswer;
+    quizResults[slide.id] = isCorrect ? "correct" : "incorrect";
 
-if (isUnit1Question) {
-  window.speechSynthesis.cancel();
+    localStorage.setItem("quiz_answers_saved", "true");
+    localStorage.setItem("itqan_quiz_answers", JSON.stringify(quizAnswers));
+    localStorage.setItem("itqan_quiz_results", JSON.stringify(quizResults));
 
-  if (isCorrect) {
-    speakText("Excellent!", "en-US");
-  } else {
-    speakText("Not quite! Try again", "en-US");
-  }
-} else {
-  // Default behavior for all other quizzes
-  if (isCorrect) {
-    speakText("Excellent! Correct answer.", "en-US");
-  } else {
-    speakText("Not quite correct. Tap the hint box below!", "en-US");
-  }
+    // تحديث الواجهة فوراً لتجنب تجميد الأزرار
+    renderActiveSlide();
+
+    // نطق عبارة التقييم فوراً بعد الـ Render مباشرة وبشكل كامل
+    if (isCorrect) {
+      speakText("Excellent! Correct answer.", "en-US");
+    } else {
+      speakText("Not quite! Try again.", "en-US");
+    }
+  });
+});
+
+// Quiz retry button clicking
+const quizRetryBtn = document.getElementById("quiz-retry-btn");
+if (quizRetryBtn) {
+  quizRetryBtn.addEventListener("click", () => {
+    if (window.quizAudioTimers && window.quizAudioTimers[slide.id]) {
+      clearTimeout(window.quizAudioTimers[slide.id]);
+    }
+    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+
+    delete quizAnswers[slide.id];
+    delete quizResults[slide.id];
+    localStorage.setItem("itqan_quiz_answers", JSON.stringify(quizAnswers));
+    localStorage.setItem("itqan_quiz_results", JSON.stringify(quizResults));
+    renderActiveSlide();
+  });
 }
 
+// Quiz audio play buttons
+document.querySelectorAll(".quiz-play-audio-btn[data-audio-text]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const textVal = btn.dataset.audioText;
+    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+    speakText(textVal, "en-US");
+  });
+});
 
-        // Re-render slide to show correct/incorrect banners
-        renderActiveSlide();
-      });
-    });
-
-    // Quiz retry button clicking
-    const quizRetryBtn = document.getElementById("quiz-retry-btn");
-    if (quizRetryBtn) {
-      quizRetryBtn.addEventListener("click", () => {
-        delete quizAnswers[slide.id];
-        delete quizResults[slide.id];
-        localStorage.setItem("itqan_quiz_answers", JSON.stringify(quizAnswers));
-        localStorage.setItem("itqan_quiz_results", JSON.stringify(quizResults));
-        renderActiveSlide();
-      });
-    }
-
-    // Quiz audio play buttons
-    document.querySelectorAll(".quiz-play-audio-btn[data-audio-text]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const textVal = btn.dataset.audioText;
-        speakText(textVal, "en-US");
-      });
-    });
-
-    // Auto-speak quiz audio when a quiz slide with audio loads
-    // Prevent auto-play for Unit 1 Questions 1–5
-const isUnit1Question =
-  slide.unit === 1 &&
-  ["u1-q1", "u1-q2", "u1-q3", "u1-q4", "u1-q5"].includes(slide.id);
-
-if (
-  slide &&
-  slide.type === "quiz" &&
-  slide.quizData &&
-  slide.quizData.audioText &&
-  !isUnit1Question
-) {
+// Auto-speak quiz audio when a quiz slide with audio loads
+if (slide && slide.type === "quiz" && slide.quizData && slide.quizData.audioText && !quizResults[slide.id]) {
   if (!window.quizAudioTimers) window.quizAudioTimers = {};
   if (window.quizAudioTimers[slide.id]) {
     clearTimeout(window.quizAudioTimers[slide.id]);
   }
   window.quizAudioTimers[slide.id] = setTimeout(() => {
-    speakText(slide.quizData.audioText, "en-US");
-  }, 500);
+    // التأكد التام من أن المستخدم لم يجب على السؤال خلال فترة الانتظار
+    if (!quizResults[slide.id]) {
+      speakText(slide.quizData.audioText, "en-US");
+    }
+  }, 600); 
 }
-
 
     // Exam question option select trigger
     document.querySelectorAll(".quiz-option-card[data-exam-option]").forEach(card => {
@@ -1240,6 +1303,39 @@ if (
         renderActiveSlide();
       });
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Exam score review - Go to certificate slide
     const examGoCompletion = document.getElementById("exam-go-completion");
@@ -1508,6 +1604,39 @@ if (
       `;
     }
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // 6. Navigation Controls & Timeline Progress Updates
   const updateGlobalProgress = () => {
