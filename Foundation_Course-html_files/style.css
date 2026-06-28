@@ -2835,4 +2835,41 @@ body.presenter-mode .presenter-exit-banner {
     display: none !important;
   }
 
+  #certificate-print-area {
+    transform: scale(1.45);
+    transform-origin: center center;
+}
+
+.cert-title-en {
+    font-size: 0.9rem !important;
+}
+
+.cert-main-badge {
+    font-size: 1.4rem !important;
+}
+
+.cert-student-pre {
+    font-size: 1rem !important;
+}
+
+.cert-student-name {
+    font-size: 2.8rem !important;
+}
+
+.cert-body-text {
+    font-size: 1.1rem !important;
+    max-width: 90% !important;
+    line-height: 1.8 !important;
+}
+
+.cert-date-title,
+.cert-sig-title {
+    font-size: .9rem !important;
+}
+
+.cert-date-value,
+.cert-sig-name {
+    font-size: 1.1rem !important;
+}
+
 }
