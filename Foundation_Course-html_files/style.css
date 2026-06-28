@@ -2772,26 +2772,33 @@ body.presenter-mode .presenter-exit-banner {
 }
 
 /* Scrollbar مخصص للجوال فقط */
-@media (max-width:640px){
+@media (max-width: 640px) {
 
-.table-responsive.scroll-hint{
-    animation:tableHint .9s ease;
+  .table-scroll {
+    overflow-x: auto;
+    position: relative;
+  }
+
+  /* شريط التمرير */
+  .table-scroll::-webkit-scrollbar {
+    height: 12px; /* ارتفاع واضح */
+  }
+
+  /* الخلفية */
+  .table-scroll::-webkit-scrollbar-track {
+    background-color: #e5e7eb; /* رمادي فاتح */
+    border-radius: 10px;
+  }
+
+  /* الشريط نفسه (بيبي بلو) */
+  .table-scroll::-webkit-scrollbar-thumb {
+    background-color: var(--brand-lightblue); /* بيبي بلو */
+    border-radius: 10px;
+  }
+
+  .table-scroll::-webkit-scrollbar-thumb:hover {
+    background-color: #6f90e8; /* درجة أغمق قليلاً عند اللمس */
+  }
 }
 
-@keyframes tableHint{
 
-0%{
-transform:translateX(0);
-}
-
-35%{
-transform:translateX(-20px);
-}
-
-100%{
-transform:translateX(0);
-}
-
-}
-
-}
