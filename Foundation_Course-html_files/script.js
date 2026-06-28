@@ -406,27 +406,7 @@ if (voices.length > 0) {
             }
           }
         }
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      
         // Clean up "A, a" to just "A" for single pronunciation
         let cleanSpeakWord = rawSpeakWord;
         if (cleanSpeakWord.includes(",")) {
@@ -958,11 +938,7 @@ if (voices.length > 0) {
               <div class="cert-header">
                 <span class="cert-title-en">Itqan Academy For Languages</span>
                 <div class="cert-logo">
-                  <svg width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 50,15 C 25,15 15,35 15,55 C 15,75 35,85 55,85 C 75,85 85,70 85,55 C 85,35 70,15 50,15 Z" stroke="#1e3a8a" stroke-width="12" fill="none" />
-                    <path d="M 45,32 C 33,32 27,42 27,53 C 27,64 35,72 50,72 C 65,72 73,62 73,53" stroke="#1e3a8a" stroke-width="10" fill="none" />
-                  </svg>
-                  <span style="font-family: 'Almarai', sans-serif;">إتقان</span>
+                 <img src="Foundation_Course-html_files/logo.png" class="cert-logo-img" alt="">
                 </div>
               </div>
               
@@ -977,16 +953,10 @@ if (voices.length > 0) {
               <div class="cert-footer">
                 <div class="cert-signature">
                   <span class="cert-sig-title">مدير الأكاديمية</span>
-                  <br><span class="cert-sig-name">نواف العفيفي</span>
+                  <br><span class="cert-sig-name">أ/ نواف</span>
                 </div>
                 <div class="cert-stamp-box">
-                  <svg width="52" height="52" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="45" fill="none" stroke="#b45309" stroke-width="3" stroke-dasharray="4,4"/>
-                    <circle cx="50" cy="50" r="40" fill="none" stroke="#1e3a8a" stroke-width="2"/>
-                    <path d="M 30,50 L 70,50 M 50,30 L 50,70" stroke="#b45309" stroke-width="2"/>
-                    <text x="50" y="54" font-size="10" font-weight="900" fill="#1e3a8a" text-anchor="middle" font-family="Almarai">مُعتمد</text>
-                  </svg>
-                </div>
+    <img src="Foundation_Course-html_files/smallLogoIcon.png" class="cert-stamp-img" alt="Stamp"> </div>
                 <div class="cert-date">
                   <span class="cert-date-title">تاريخ الإصدار</span>
                   <br><span class="cert-date-value" id="cert-current-date">24-06-2026</span>
@@ -1523,16 +1493,6 @@ if (slide && slide.type === "quiz" && slide.quizData && slide.quizData.audioText
     }
   };
 
-
-
-
-
-
-
-
-
-
-
 const initTableHint = () => {
 
     if (window.innerWidth > 640) return;
@@ -1566,27 +1526,6 @@ const initTableHint = () => {
     });
 
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   // 6. Navigation Controls & Timeline Progress Updates
   const updateGlobalProgress = () => {
@@ -1672,8 +1611,6 @@ const resetCourse = () => {
 
   saveSlideState("cover", 1);
 };
-
-
 
   // Steer Navigation Handlers
   const goToNextSlide = () => {
