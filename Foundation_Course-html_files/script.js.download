@@ -1124,11 +1124,28 @@ if (voices.length > 0) {
         localStorage.setItem("itqan_quiz_answers", JSON.stringify(quizAnswers));
         localStorage.setItem("itqan_quiz_results", JSON.stringify(quizResults));
 
-        if (isCorrect) {
-          speakText("Excellent! Correct answer.", "en-US");
-        } else {
-          speakText("Not quite correct. Tap the hint box below!", "en-US");
-        }
+        // Special logic for Unit 1 – Questions 1 to 5
+const isUnit1Question =
+  slide.unit === 1 &&
+  ["u1-q1", "u1-q2", "u1-q3", "u1-q4", "u1-q5"].includes(slide.id);
+
+if (isUnit1Question) {
+  window.speechSynthesis.cancel();
+
+  if (isCorrect) {
+    speakText("Excellent!", "en-US");
+  } else {
+    speakText("Not quite! Try again", "en-US");
+  }
+} else {
+  // Default behavior for all other quizzes
+  if (isCorrect) {
+    speakText("Excellent! Correct answer.", "en-US");
+  } else {
+    speakText("Not quite correct. Tap the hint box below!", "en-US");
+  }
+}
+
 
         // Re-render slide to show correct/incorrect banners
         renderActiveSlide();
@@ -1156,15 +1173,27 @@ if (voices.length > 0) {
     });
 
     // Auto-speak quiz audio when a quiz slide with audio loads
-    if (slide && slide.type === "quiz" && slide.quizData && slide.quizData.audioText) {
-      if (!window.quizAudioTimers) window.quizAudioTimers = {};
-      if (window.quizAudioTimers[slide.id]) {
-        clearTimeout(window.quizAudioTimers[slide.id]);
-      }
-      window.quizAudioTimers[slide.id] = setTimeout(() => {
-        speakText(slide.quizData.audioText, "en-US");
-      }, 500);
-    }
+    // Prevent auto-play for Unit 1 Questions 1–5
+const isUnit1Question =
+  slide.unit === 1 &&
+  ["u1-q1", "u1-q2", "u1-q3", "u1-q4", "u1-q5"].includes(slide.id);
+
+if (
+  slide &&
+  slide.type === "quiz" &&
+  slide.quizData &&
+  slide.quizData.audioText &&
+  !isUnit1Question
+) {
+  if (!window.quizAudioTimers) window.quizAudioTimers = {};
+  if (window.quizAudioTimers[slide.id]) {
+    clearTimeout(window.quizAudioTimers[slide.id]);
+  }
+  window.quizAudioTimers[slide.id] = setTimeout(() => {
+    speakText(slide.quizData.audioText, "en-US");
+  }, 500);
+}
+
 
     // Exam question option select trigger
     document.querySelectorAll(".quiz-option-card[data-exam-option]").forEach(card => {
