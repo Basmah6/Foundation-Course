@@ -2838,6 +2838,11 @@ body.presenter-mode .presenter-exit-banner {
 
 @media print {
 
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+
   /* إخفاء كل شيء */
   body * {
     visibility: hidden !important;
@@ -2849,14 +2854,15 @@ body.presenter-mode .presenter-exit-banner {
     visibility: visible !important;
   }
 
-  /* جعل الشهادة تملأ الصفحة */
+  /* جعل الشهادة تملأ الصفحة — fixed physical width so mobile browsers don't scale it down */
   #certificate-print-area {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 190mm;   /* A4 width (210mm) minus 2×10mm margins */
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
   }
 
   /* إخفاء زر الطباعة نفسه */
@@ -2864,9 +2870,9 @@ body.presenter-mode .presenter-exit-banner {
     display: none !important;
   }
 
-.cert-header,
-.cert-footer {
+  .cert-header,
+  .cert-footer {
     padding-inline: 20px !important;
-}
-  
+  }
+
 }
