@@ -1976,9 +1976,32 @@ body {
 }
 
 .cert-logo {
+  width: 60px;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  gap: 4px;
+  flex-shrink: 0;
+}
+
+.cert-logo-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.cert-stamp-img {
+  width: 32px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.cert-stamp-img {
+  width: 32px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin-top: 8px;
 }
 
 .cert-logo span {
@@ -2824,22 +2847,23 @@ body.presenter-mode .presenter-exit-banner {
   }
 
   /* جعل الشهادة تملأ الصفحة */
- #certificate-print-area {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  max-width: none;
-
-  margin: 0 auto;
-
-  transform-origin: top center;
-}
+  #certificate-print-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
 
   /* إخفاء زر الطباعة نفسه */
   #cert-print-btn {
     display: none !important;
   }
-
+  
+.cert-header,
+.cert-footer {
+    padding-inline: 20px !important;
+}
+  
 }
