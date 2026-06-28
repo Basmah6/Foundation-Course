@@ -1208,6 +1208,7 @@ document.querySelectorAll(".quiz-option-card[data-option]").forEach(card => {
 
     // تحديث الواجهة فوراً لتجنب تجميد الأزرار
     renderActiveSlide();
+    initTableHints();
 
     // نطق عبارة التقييم فوراً بعد الـ Render مباشرة وبشكل كامل
     if (isCorrect) {
@@ -1232,6 +1233,7 @@ if (quizRetryBtn) {
     localStorage.setItem("itqan_quiz_answers", JSON.stringify(quizAnswers));
     localStorage.setItem("itqan_quiz_results", JSON.stringify(quizResults));
     renderActiveSlide();
+    initTableHints();
   });
 }
 
@@ -1269,6 +1271,7 @@ if (slide && slide.type === "quiz" && slide.quizData && slide.quizData.audioText
         
         // Re-render quickly to show active cell borders
         renderActiveSlide();
+        initTableHints();
       });
     });
 
@@ -1278,6 +1281,7 @@ if (slide && slide.type === "quiz" && slide.quizData && slide.quizData.audioText
         const indexClicked = parseInt(dot.dataset.examNavIdx);
         currentExamQuestionIndex = indexClicked;
         renderActiveSlide();
+        initTableHints();
       });
     });
 
@@ -1288,6 +1292,7 @@ if (slide && slide.type === "quiz" && slide.quizData && slide.quizData.audioText
         examSubmitted = true;
         localStorage.setItem("itqan_exam_submitted", "true");
         renderActiveSlide();
+        initTableHints();
       });
     }
 
@@ -1301,6 +1306,7 @@ if (slide && slide.type === "quiz" && slide.quizData && slide.quizData.audioText
         localStorage.removeItem("itqan_exam_answers");
         localStorage.removeItem("itqan_exam_submitted");
         renderActiveSlide();
+        initTableHints();
       });
     }
 
@@ -1703,6 +1709,7 @@ const resetCourse = () => {
       if (currentExamQuestionIndex < totalQuestions - 1) {
         currentExamQuestionIndex += 1;
         renderActiveSlide();
+        initTableHints();
       } else if (Object.keys(examAnswers).length >= totalQuestions) {
         if (currentSlideIndex < window.slidesData.length - 1) {
           const nextSlideObj = window.slidesData[currentSlideIndex + 1];
@@ -1712,6 +1719,7 @@ const resetCourse = () => {
         }
       } else {
         renderActiveSlide();
+        initTableHints();
       }
 
       if ("speechSynthesis" in window) window.speechSynthesis.cancel();
@@ -1736,8 +1744,10 @@ const resetCourse = () => {
       if (currentExamQuestionIndex > 0) {
         currentExamQuestionIndex -= 1;
         renderActiveSlide();
+        initTableHints();
       } else {
         renderActiveSlide();
+        initTableHints();
       }
       if ("speechSynthesis" in window) window.speechSynthesis.cancel();
       return;
@@ -1763,6 +1773,7 @@ const resetCourse = () => {
 
     // Re-render
     renderActiveSlide();
+    initTableHints();
     renderSidebar();
   };
 
@@ -1930,6 +1941,7 @@ const resetCourse = () => {
       
       // Update sidebar badge/star displays
       renderActiveSlide();
+      initTableHints();
       renderSidebar();
     });
   }
@@ -1954,9 +1966,42 @@ const resetCourse = () => {
   // 8. Bootstrap Initial Paint
   updateFilterButtonsState();
   renderActiveSlide();
+  initTableHints();
   renderSidebar();
 
+const initTableHints = () => {
 
+  if (window.innerWidth > 640) return;
+
+  const observer = new IntersectionObserver((entries) => {
+
+    entries.forEach(entry => {
+
+      if (!entry.isIntersecting) return;
+
+      const table = entry.target;
+
+      if (table.dataset.hintPlayed) return;
+
+      table.dataset.hintPlayed = "true";
+
+      table.classList.add("scroll-hint");
+
+      table.addEventListener("animationend", () => {
+        table.classList.remove("scroll-hint");
+      }, { once: true });
+
+    });
+
+  }, {
+    threshold: 0.5
+  });
+
+  document.querySelectorAll(".table-responsive").forEach(table=>{
+    observer.observe(table);
+  });
+
+};
 
   
 }
