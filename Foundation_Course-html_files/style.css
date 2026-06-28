@@ -2812,6 +2812,20 @@ body.presenter-mode .presenter-exit-banner {
 
 @media print {
 
+  @page {
+    size: A4 landscape; /* أو احذف landscape إذا شهادتك بالطول */
+    margin: 0;
+  }
+
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: white;
+  }
+
   body * {
     visibility: hidden !important;
   }
@@ -2822,54 +2836,31 @@ body.presenter-mode .presenter-exit-banner {
   }
 
   #certificate-print-area {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: fixed;
+    inset: 0;
 
-    display: block !important;
+    width: 100vw;
+    height: 100vh;
 
-    visibility: visible !important;
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* الشهادة نفسها */
+  #certificate-print-area .certificate {
+    width: 100%;
+    max-width: none;
+    height: auto;
   }
 
   #cert-print-btn {
     display: none !important;
   }
 
-  #certificate-print-area {
-    transform: scale(1.45);
-    transform-origin: center center;
 }
 
-.cert-title-en {
-    font-size: 0.9rem !important;
-}
 
-.cert-main-badge {
-    font-size: 1.4rem !important;
-}
-
-.cert-student-pre {
-    font-size: 1rem !important;
-}
-
-.cert-student-name {
-    font-size: 2.8rem !important;
-}
-
-.cert-body-text {
-    font-size: 1.1rem !important;
-    max-width: 90% !important;
-    line-height: 1.8 !important;
-}
-
-.cert-date-title,
-.cert-sig-title {
-    font-size: .9rem !important;
-}
-
-.cert-date-value,
-.cert-sig-name {
-    font-size: 1.1rem !important;
-}
-
-}
