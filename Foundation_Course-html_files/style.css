@@ -2842,14 +2842,4 @@ body.presenter-mode .presenter-exit-banner {
     display: none !important;
   }
 
-  @media print and (max-width: 768px) {
-
-  #certificate-print-area {
-
-    zoom: 1.45;
-
-  }
-
-}
-
 }
