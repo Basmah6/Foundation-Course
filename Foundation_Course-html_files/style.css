@@ -2089,6 +2089,9 @@ body {
   font-weight: 900;
   color: #1e3a8a;
   font-family: 'Cairo', sans-serif;
+
+  display: inline-block;
+  transform: translateX(10px);
 }
 
 /* Stylized Stamp SVG Overlay */
@@ -2860,7 +2863,7 @@ body.presenter-mode .presenter-exit-banner {
   #cert-print-btn {
     display: none !important;
   }
-  
+
 .cert-header,
 .cert-footer {
     padding-inline: 20px !important;
