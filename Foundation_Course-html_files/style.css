@@ -2810,4 +2810,33 @@ body.presenter-mode .presenter-exit-banner {
 
 }
 
+@media print {
+
+  /* إخفاء كل شيء */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* إظهار الشهادة فقط */
+  #certificate-print-area,
+  #certificate-print-area * {
+    visibility: visible !important;
+  }
+
+  /* جعل الشهادة تملأ الصفحة */
+  #certificate-print-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* إخفاء زر الطباعة نفسه */
+  #cert-print-btn {
+    display: none !important;
+  }
+
+}
 
