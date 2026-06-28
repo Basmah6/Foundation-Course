@@ -1304,39 +1304,6 @@ if (slide && slide.type === "quiz" && slide.quizData && slide.quizData.audioText
       });
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // Exam score review - Go to certificate slide
     const examGoCompletion = document.getElementById("exam-go-completion");
     if (examGoCompletion) {
@@ -1705,6 +1672,26 @@ if (slide && slide.type === "quiz" && slide.quizData && slide.quizData.audioText
     }
   };
 
+
+const resetCourse = () => {
+  quizAnswers = {};
+  quizResults = {};
+  examAnswers = {};
+  examSubmitted = false;
+  currentExamQuestionIndex = 0;
+  studentName = "";
+
+  localStorage.removeItem("itqan_quiz_answers");
+  localStorage.removeItem("itqan_quiz_results");
+  localStorage.removeItem("itqan_exam_answers");
+  localStorage.removeItem("itqan_exam_submitted");
+  localStorage.removeItem("itqan_student_name");
+
+  saveSlideState("cover", 1);
+};
+
+
+
   // Steer Navigation Handlers
   const goToNextSlide = () => {
     const currentSlideIndex = window.slidesData.findIndex(s => s.id === activeSlideId);
@@ -1721,7 +1708,7 @@ if (slide && slide.type === "quiz" && slide.quizData && slide.quizData.audioText
           const nextSlideObj = window.slidesData[currentSlideIndex + 1];
           saveSlideState(nextSlideObj.id, nextSlideObj.unit);
         } else {
-          saveSlideState("cover", 1);
+          resetCourse();
         }
       } else {
         renderActiveSlide();
@@ -1736,7 +1723,7 @@ if (slide && slide.type === "quiz" && slide.quizData && slide.quizData.audioText
       saveSlideState(nextSlideObj.id, nextSlideObj.unit);
     } else {
       // Reset presentation back to cover page
-      saveSlideState("cover", 1);
+      resetCourse();
     }
     if ("speechSynthesis" in window) window.speechSynthesis.cancel();
   };
@@ -1968,6 +1955,12 @@ if (slide && slide.type === "quiz" && slide.quizData && slide.quizData.audioText
   updateFilterButtonsState();
   renderActiveSlide();
   renderSidebar();
+
+
+
+  
 }
 
+
 );
+
