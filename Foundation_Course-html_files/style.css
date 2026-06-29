@@ -2850,14 +2850,18 @@ body.presenter-mode .presenter-exit-banner {
   }
 
   /* جعل الشهادة تملأ الصفحة */
-  #certificate-print-area {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
+ #certificate-print-area {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  width: 94vw;
+  max-width: 1000px;
+
+  margin: 0;
+}
 
   /* إخفاء زر الطباعة نفسه */
   #cert-print-btn {
