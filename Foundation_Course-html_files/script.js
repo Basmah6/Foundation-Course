@@ -1550,8 +1550,11 @@ const initTableHint = () => {
       prevBtn.innerHTML = isFinalExamSlide
         ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="15 18 9 12 15 6"></polyline></svg> السؤال السابق`
         : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="15 18 9 12 15 6"></polyline></svg> السابق`;
+      // Dim prev button when on first exam question or first slide
+      const isPrevDim = isFinalExamSlide ? currentExamQuestionIndex === 0 : currentSlideIndex === 0;
+      prevBtn.style.opacity = isPrevDim ? "0.55" : "";
     }
-    if (nextBtn) {
+      if (nextBtn) {
       if (currentSlideIndex === window.slidesData.length - 1) {
         nextBtn.innerHTML = `إعادة تشغيل الدورة <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>`;
       } else if (isFinalExamSlide) {
@@ -1559,7 +1562,13 @@ const initTableHint = () => {
       } else {
         nextBtn.innerHTML = `التالي <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
       }
+      const totalQuestions = isFinalExamSlide ? (slide.examQuestions?.length || 0) : 0;
+      const isOnLastQuestion = isFinalExamSlide && currentExamQuestionIndex === totalQuestions - 1;
+      const notAllAnswered = Object.keys(examAnswers).length < totalQuestions;
+      nextBtn.style.opacity = (isOnLastQuestion && notAllAnswered) ? "0.55" : "";
     }
+
+
 
     // Render indicators (dots) representing lessons in the current unit
     if (dotIndicators) {
