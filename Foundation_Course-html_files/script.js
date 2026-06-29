@@ -1276,13 +1276,30 @@ if (slide && slide.type === "quiz" && slide.quizData && slide.quizData.audioText
       });
     }
 
-    // Completion print certificate trigger
+       // Completion print certificate trigger
     const certPrintBtn = document.getElementById("cert-print-btn");
     if (certPrintBtn) {
       certPrintBtn.addEventListener("click", () => {
-        window.print();
+        const isMobile = window.innerWidth < 768;
+        if (isMobile) {
+          // Temporarily reflow the page at desktop width so Safari prints at full scale
+          const printStyle = document.createElement("style");
+          printStyle.id = "mobile-print-fix";
+          printStyle.textContent = "html { width: 1024px !important; }";
+          document.head.appendChild(printStyle);
+          setTimeout(function () {
+            window.print();
+            setTimeout(function () {
+              const el = document.getElementById("mobile-print-fix");
+              if (el) el.parentNode.removeChild(el);
+            }, 500);
+          }, 300);
+        } else {
+          window.print();
+        }
       });
     }
+
 
     // Completion - Go back to exam to qualify
     const goBackExamBtn = document.getElementById("go-back-exam-btn");
