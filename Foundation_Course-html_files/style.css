@@ -1938,17 +1938,21 @@ body {
 }
 
 /* Dynamic Premium Printable Cairo Certificate Card */
-.certificate-frame {
-  background-color: #fafaf9;
-  border: 6px double rgba(30, 58, 138, 0.4);
-  border-radius: 16px;
-  padding: 24px 32px;
-  color: #1e293b;
-  text-align: center;
-  position: relative;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-  margin-top: 16px;
-  user-select: text; /* Allow student to copy name or details */
+.certificate-frame{
+    width:100%;
+    max-width:1123px;      /* مقاس A4 عرضي */
+    aspect-ratio:1.414/1;  /* A4 Landscape */
+    margin:20px auto;
+    background:#fafaf9;
+    border:6px double rgba(30,58,138,.4);
+    border-radius:16px;
+    padding:40px;
+    box-sizing:border-box;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    overflow:hidden;
 }
 
 /* Corner frame lines */
@@ -1957,17 +1961,17 @@ body {
 .cert-corner-bl { position: absolute; bottom: 4px; left: 4px; border-bottom: 2px solid #1e3a8a; border-left: 2px solid #1e3a8a; width: 10px; height: 10px; opacity: 0.4; }
 .cert-corner-br { position: absolute; bottom: 4px; right: 4px; border-bottom: 2px solid #1e3a8a; border-right: 2px solid #1e3a8a; width: 10px; height: 10px; opacity: 0.4; }
 
-.cert-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-  padding-bottom: 8px;
-  margin-bottom: 12px;
+.cert-header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    border-bottom:1px solid rgba(0,0,0,.06);
+    padding-bottom:10px;
+    margin-bottom:18px;
 }
 
 .cert-title-en {
-  font-size: 0.55rem;
+  font-size:13px;
   font-family: var(--font-mono);
   font-weight: 700;
   text-transform: uppercase;
@@ -2010,13 +2014,12 @@ body {
   color: #0f172a;
 }
 
-.cert-main-badge {
-  font-size: 0.72rem;
-  font-weight: 850;
-  color: #92400e;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  margin-bottom: 14px;
+.cert-main-badge{
+    font-size:1rem;
+    font-weight:900;
+    color:#92400e;
+    letter-spacing:.08em;
+    margin:18px 0;
 }
 
 .cert-student-pre {
@@ -2049,12 +2052,13 @@ body {
   margin: 0 auto 20px auto;
 }
 
-.cert-footer {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  border-top: 1px solid rgba(0,0,0,0.06);
-  padding-top: 12px;
+.cert-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:40px;
+    border-top:1px solid rgba(0,0,0,.06);
+    padding-top:18px;
 }
 
 .cert-date {
@@ -2062,13 +2066,13 @@ body {
 }
 
 .cert-date-title {
-  font-size: 0.6rem;
+  font-size:13px;
   color: var(--text-light);
   font-weight: 700;
 }
 
 .cert-date-value {
-  font-size: 0.7rem;
+  font-size:14px;
   font-weight: 800;
   color: #334155;
   font-family: var(--font-mono);
@@ -2079,13 +2083,13 @@ body {
 }
 
 .cert-sig-title {
-  font-size: 0.6rem;
+  font-size:13px;
   color: var(--text-light);
   font-weight: 700;
 }
 
 .cert-sig-name {
-  font-size: 0.72rem;
+  font-size:15px;
   font-weight: 900;
   color: #1e3a8a;
   font-family: 'Cairo', sans-serif;
@@ -2836,42 +2840,54 @@ body.presenter-mode .presenter-exit-banner {
 
 }
 
-@media print {
+@media print{
 
-  /* إخفاء كل شيء */
-  body * {
-    visibility: hidden !important;
-  }
+    @page{
+        size:A4 landscape;
+        margin:0;
+    }
 
-  /* إظهار الشهادة فقط */
-  #certificate-print-area,
-  #certificate-print-area * {
-    visibility: visible !important;
-  }
+    html,
+    body{
+        width:100%;
+        height:100%;
+        margin:0;
+        padding:0;
+        background:#fff;
+    }
 
-  /* جعل الشهادة تملأ الصفحة */
-  #certificate-print-area {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
+    body *{
+        visibility:hidden !important;
+    }
 
-  /* إخفاء زر الطباعة نفسه */
-  #cert-print-btn {
-    display: none !important;
-  }
+    #certificate-print-area,
+    #certificate-print-area *{
+        visibility:visible !important;
+    }
 
-.cert-header,
-.cert-footer {
-    padding-inline: 20px !important;
-}
-  
-}
+    #certificate-print-area{
+        position:absolute;
+        inset:0;
+        width:100vw;
+        height:100vh;
+        margin:auto;
+        padding:20px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        box-sizing:border-box;
+    }
 
-.site-logo-container{
-    display:flex;
-    align-items:center;
+    .certificate-frame{
+        width:100%;
+        height:100%;
+        max-width:none;
+        margin:0;
+        transform:none;
+    }
+
+    #cert-print-btn{
+        display:none!important;
+    }
+
 }
