@@ -2849,7 +2849,7 @@ body.presenter-mode .presenter-exit-banner {
     visibility: visible !important;
   }
 
-  /* تثبيت الشهادة في أعلى الصفحة */
+  /* جعل الشهادة تملأ الصفحة */
   #certificate-print-area {
     position: absolute;
     top: 0;
@@ -2864,16 +2864,9 @@ body.presenter-mode .presenter-exit-banner {
     display: none !important;
   }
 
-  .cert-header,
-  .cert-footer {
+.cert-header,
+.cert-footer {
     padding-inline: 20px !important;
-  }
 }
-
-/* Mobile print scaling — Safari and Chrome on phones */
-@media print and (max-device-width: 768px) {
-  #certificate-print-area {
-    zoom: 1.73;
-  }
+  
 }
-
