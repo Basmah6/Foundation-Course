@@ -2857,7 +2857,6 @@ body.presenter-mode .presenter-exit-banner {
     width: 100%;
     margin: 0;
     padding: 0;
-    page-break-inside: avoid;
   }
 
   /* إخفاء زر الطباعة نفسه */
@@ -2865,9 +2864,9 @@ body.presenter-mode .presenter-exit-banner {
     display: none !important;
   }
 
-  .cert-header,
-  .cert-footer {
+.cert-header,
+.cert-footer {
     padding-inline: 20px !important;
-  }
 }
-
+  
+}
