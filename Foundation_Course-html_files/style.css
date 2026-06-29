@@ -2870,3 +2870,8 @@ body.presenter-mode .presenter-exit-banner {
 }
   
 }
+
+.site-logo-container{
+    display:flex;
+    align-items:center;
+}
