@@ -6,7 +6,7 @@
   --brand-blue-hover: #173fae;
   --brand-yellow: #ea9835;
   --brand-lightblue: #84a5f2;
-  --brand-peach: #fcded6
+  --brand-peach: #fcded6;
   --brand-terracotta: #e06045;
   
   --bg-slate: #f8fafc;
@@ -2857,8 +2857,6 @@ body.presenter-mode .presenter-exit-banner {
     width: 100%;
     margin: 0;
     padding: 0;
-    page-break-inside: avoid;
-    page-break-after: avoid;
   }
 
   /* إخفاء زر الطباعة نفسه */
@@ -2872,10 +2870,10 @@ body.presenter-mode .presenter-exit-banner {
   }
 }
 
-/* Mobile print scaling — only applied when printing from a narrow viewport (phone) */
-@media print and (max-width: 600px) {
+/* Mobile print scaling — Safari and Chrome on phones */
+@media print and (max-device-width: 768px) {
   #certificate-print-area {
-    transform: scale(2.0);
-    transform-origin: top center;
+    zoom: 1.73;
   }
 }
+
