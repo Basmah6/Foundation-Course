@@ -1884,19 +1884,3 @@ const resetCourse = () => {
 
 );
 
-// Mobile print viewport fix — temporarily widen viewport to desktop width before printing
-(function () {
-  var metaViewport = document.querySelector('meta[name="viewport"]');
-  if (!metaViewport) return;
-
-  var originalContent = metaViewport.getAttribute('content');
-  var printContent = 'width=1024';
-
-  window.addEventListener('beforeprint', function () {
-    metaViewport.setAttribute('content', printContent);
-  });
-
-  window.addEventListener('afterprint', function () {
-    metaViewport.setAttribute('content', originalContent);
-  });
-})();
