@@ -1615,98 +1615,99 @@ const slidesData = [
     subtitle: "شريحة التقييم النهائي",
     arabicTitle: "الاختبار الشامل لقياس مدى تمكنك من مهارات الدورة التأسيسية 📝",
     description: "يتكون هذا الاختبار من 10 أسئلة تفاعلية متنوعة تغطي جميع الوحدات الدراسية (الحروف، الأصوات المركبة، الكلمات الصامتة، تركيب الجملة، أدوات التعريف، وأسماء الإشارة). اجتياز هذا الاختبار هو خطوتك الأخيرة للحصول على الشهادة المعتمدة من أكاديميتنا!",
-    examQuestions: [
+        examQuestions: [
       {
         id: "fe-q1",
-        question: "Which letter has the short vowel sound /æ/ as in 'apple' or 'cat'?",
-        arabicQuestion: "أي حرف له الصوت المتحرك القصير /æ/ كما في 'apple' أو 'cat'؟",
-        options: ["Letter A", "Letter E", "Letter I", "Letter O"],
-        correctAnswer: "Letter A",
-        hint: "حرف الـ A هو الذي يمثل الصوت المفتوح القصير /æ/.",
+        question: "B__ll",
+        arabicQuestion: "",
+        options: ["e", "a", "o"],
+        correctAnswer: "a",
+        hint: "Ball - الكرة",
         unit: 1
       },
       {
         id: "fe-q2",
-        question: "What sound does the compound letters 'ch' make in the word 'chair'?",
-        arabicQuestion: "ما هو الصوت الذي يصدره الحرفان المركبان 'ch' في كلمة 'chair'؟",
-        options: ["/ʃ/ (ش)", "/tʃ/ (تْش)", "/k/ (ك)", "/f/ (ف)"],
-        correctAnswer: "/tʃ/ (تْش)",
-        hint: "الحرفان 'ch' يلفظان عادة كصوت 'تْش' كما في الكرسي (chair).",
+        question: "Sara ____ smart",
+        arabicQuestion: "سارة _____ ذكية",
+        options: ["am", "is", "are"],
+        correctAnswer: "is",
+        hint: "Sara = she → is",
         unit: 2
       },
       {
         id: "fe-q3",
-        question: "In the word 'write', which letter is silent (not pronounced)?",
-        arabicQuestion: "في كلمة 'write' (يكتب)، أي حرف هو الصامت (لا يُنطق)؟",
-        options: ["Letter r", "Letter i", "Letter t", "Letter w"],
-        correctAnswer: "Letter w",
-        hint: "في تركيب wr في بداية الكلمة، يكون حرف w صامتاً تماماً ونبدأ النطق من الـ r.",
-        unit: 3
+        question: "We ___ friends",
+        arabicQuestion: "نحن _____ أصدقاء",
+        options: ["am", "is", "are"],
+        correctAnswer: "are",
+        hint: "We → are",
+        unit: 2
       },
       {
         id: "fe-q4",
-        question: "What is the correct English word order for: 'الولد يقرأ كتاباً'?",
-        arabicQuestion: "ما هو الترتيب الصحيح للكلمات بالإنجليزية لترجمة: 'الولد يقرأ كتاباً'؟",
-        options: ["Reads the boy a book.", "The boy a book reads.", "The boy reads a book.", "A book reads the boy."],
-        correctAnswer: "The boy reads a book.",
-        hint: "في الإنجليزية، نبدأ بالفاعل (Subject) ثم الفعل (Verb) ثم المفعول به (Object).",
-        unit: 4
+        question: "What part of speech is (teacher)?",
+        arabicQuestion: "ما نوع الكلمة (teacher)؟",
+        options: ["pronoun", "noun", "adjective"],
+        correctAnswer: "noun",
+        hint: "Teacher = اسم لشخص → noun",
+        unit: 3
       },
       {
         id: "fe-q5",
-        question: "Which article should be placed before the word 'hour' in: 'I will see you in ___ hour'?",
-        arabicQuestion: "أي أداة تعريف/تنكير يجب وضعها قبل كلمة 'hour' (ساعة) في الجملة؟",
-        options: ["a", "an", "the", "No article needed"],
-        correctAnswer: "an",
-        hint: "كلمة 'hour' تبدأ بحرف h صامت، وبالتالي تبدأ بصوت متحرك /aʊər/، لذلك نستخدم 'an' وليس 'a'.",
-        unit: 5
+        question: "What part of speech is (under)?",
+        arabicQuestion: "ما نوع الكلمة (under)؟",
+        options: ["conjunction", "preposition", "adverb"],
+        correctAnswer: "preposition",
+        hint: "Under = تحت → حرف جر → preposition",
+        unit: 3
       },
       {
         id: "fe-q6",
-        question: "How do you point to plural objects that are far away from you?",
-        arabicQuestion: "كيف تشير إلى أشياء جمع بعيدة عنك؟",
-        options: ["These", "Those", "This", "That"],
-        correctAnswer: "Those",
-        hint: "نستخدم 'Those' للإشارة للجمع البعيد (أولئك)، بينما 'These' للجمع القريب.",
-        unit: 5
-      },
-      {
-        id: "fe-q7",
-        question: "What does the English word 'Daughter' mean in Arabic?",
-        arabicQuestion: "ماذا تعني كلمة 'Daughter' باللغة العربية؟",
-        options: ["ابن", "ابنة", "أخت", "خالة / عمة"],
-        correctAnswer: "ابنة",
-        hint: "كلمة 'Daughter' تعني الابنة، بينما 'Son' تعني الابن.",
-        unit: 6
-      },
-      {
-        id: "fe-q8",
-        question: "If someone asks you 'How do you do?', what is the most appropriate native response?",
-        arabicQuestion: "إذا سألك شخص لأول مرة 'How do you do?'، ما هو الرد الأكثر ملاءمة ولطافة؟",
-        options: ["I am fine, thank you.", "How do you do?", "Goodbye.", "Yes, I do."],
-        correctAnswer: "How do you do?",
-        hint: "العبارة الرسمية 'How do you do?' تُرد عليها بنفس العبارة 'How do you do?' عند اللقاء الأول.",
-        unit: 6
-      },
-      {
-        id: "fe-q9",
-        question: "Choose the correct sentence:",
-        arabicQuestion: "اختر الجملة الصحيحة لغوياً:",
-        options: ["They is learning English.", "They am learning English.", "They are learning English.", "They be learning English."],
-        correctAnswer: "They are learning English.",
-        hint: "الضمير الجمع 'They' يأخذ الفعل المساعد 'are' في زمن المضارع المستمر.",
+        question: "What is the subject in the sentence: I play football?",
+        arabicQuestion: "ما هو الفاعل في الجملة: I play football؟",
+        options: ["football", "play", "I"],
+        correctAnswer: "I",
+        hint: "الفاعل هو من يقوم بالفعل → I",
         unit: 4
       },
       {
+        id: "fe-q7",
+        question: "The word 'play' in the sentence (I play football) is:",
+        arabicQuestion: "كلمة play في الجملة (I play football) هي:",
+        options: ["subject", "verb", "object"],
+        correctAnswer: "verb",
+        hint: "play = الفعل الذي يقوم به الفاعل → verb",
+        unit: 4
+      },
+      {
+        id: "fe-q8",
+        question: "Choose the correct sentence:",
+        arabicQuestion: "اختر الجملة الصحيحة:",
+        options: ["They TV watch", "TV they watch", "They watch TV"],
+        correctAnswer: "They watch TV",
+        hint: "الترتيب الصحيح: Subject + Verb + Object",
+        unit: 4
+      },
+      {
+        id: "fe-q9",
+        question: "Choose the correct form: He ___ English.",
+        arabicQuestion: "اختر التصريف الصحيح: He ___ English.",
+        options: ["studies", "study", "studying"],
+        correctAnswer: "studies",
+        hint: "He/She/It → نضيف es أو s للفعل في المضارع البسيط",
+        unit: 5
+      },
+      {
         id: "fe-q10",
-        question: "Which word contains the voiceless 'th' sound /θ/ (like the Arabic letter ث)?",
-        arabicQuestion: "أي كلمة تحتوي على صوت 'th' المهموس /θ/ (مثل حرف الثاء العربي)؟",
-        options: ["This", "Mother", "Thank you", "They"],
-        correctAnswer: "Thank you",
-        hint: "كلمة 'Thank you' تلفظ بالثاء /θ/، بينما كلمات This و They و Mother تلفظ بالذال /ð/.",
-        unit: 2
+        question: "How are you?",
+        arabicQuestion: "كيف حالك؟",
+        options: ["I'm Nawaf", "I'm from Saudi Arabia", "I'm fine."],
+        correctAnswer: "I'm fine.",
+        hint: "How are you = كيف حالك → الجواب الصحيح: I'm fine",
+        unit: 6
       }
     ]
+
   },
 
   // COURSE COMPLETION SLIDE
